@@ -1,0 +1,35 @@
+//build.gradle: 프로젝트의 플러그인 의존성 관리를 위한 설정
+buildscript {
+    ext { //ext: build.gradle 에서 사용하는 전역변수를 설정
+        springBootVersion = '2.1.9.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies { //spring-boot-gradle-plugin 이라는 스프링부트 그레이들 플러그인의 2.1.9.RELEASE 를 의존성으로 받음
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+
+//앞서 선언한 플러그인 의존성들을 적용할 것인지 결정 (아래 4개는 자바/스프링부트 사용하려면 필수 추가)
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management' //스프링부트의 의존성들을 관리해 주는 플러그인이라 꼭 추가
+
+
+group 'com.buja.project'
+version '1.0.4-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
+sourceCompatibility = 1.8
+
+
+repositories { //repositories: 각종 의존성 (라이브러리)들을 어떤 원격 저장소에서 받을지를 정하는 곳
+    mavenCentral()
+}
+
+
+dependencies { //dependencies: 프로젝트 개발에 필요한 의존성들을 선언하는 곳 (특정 버전을 명시X)
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
